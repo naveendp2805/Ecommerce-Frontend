@@ -1,0 +1,23 @@
+.product-card {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px;
+}
+
+.product-card:hover {
+    cursor: pointer;
+}
+
+.product-image {
+    width: 100px;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}

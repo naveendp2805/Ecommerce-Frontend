@@ -1,9 +1,14 @@
 import './App.css';
+import MainLayout from './layouts/MainLayout';
 import AppRoutes from './routes/AppRoutes';
 
 function App() {
 
-  return <AppRoutes />;
+  return (
+    <MainLayout>
+      <AppRoutes />
+    </MainLayout>
+  );
 }
 
 export default App;
