@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllProducts, getProductsByPage, getProductsByCategory } from "../services/productService";
+import { getProductsByPage, getProductsByCategory } from "../services/productService";
 import ProductCard from "../components/product/ProductCard.jsx";
+import ProductFilters from "../components/product/ProductFilters.jsx";
 import "./Products.css";
 import { getAllCategories } from "../services/categoryService.jsx";
 
@@ -14,7 +15,7 @@ function Products() {
 
     const [sortBy, setSortBy] = useState("id");
 
-    const [direction, setDirection] = useState("asc")
+    const [direction, setDirection] = useState("asc");
 
     const [products, setProducts] = useState([]);
 
@@ -24,8 +25,11 @@ function Products() {
 
     useEffect(() => {
         loadProducts();
-        loadCategories();
     }, [page, selectedCategory, sortBy, direction]);
+
+    useEffect(() => {
+        loadCategories();
+    }, []);
 
     const loadProducts = async () => {
         try {
@@ -61,87 +65,20 @@ function Products() {
         <div>
             <h1>Products</h1>
 
-            <input type="text" 
-                    placeholder="Search Products" 
-                    value={searchTerm} 
-                    onChange={(e) => setSearchTerm(e.target.value)} 
+            <ProductFilters 
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+
+                categories={categories}
+
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+
+                setPage={setPage}
+
+                setSortBy={setSortBy}
+                setDirection={setDirection}
             />
-
-            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} >
-                <option value="" >
-                    All Categories
-                </option>
-
-                {categories.map(category => (
-                    <option key={category.id} value={category.id} >
-                        {category.name}
-                    </option>
-                ))}
-            </select>
-
-            <select  
-                onChange={(e) => {
-                    const value = e.target.value;
-
-                    if(value === "idAsc") {
-                        setSortBy("id");
-                        setDirection("asc")
-                    }
-
-                    if(value === "idDesc") {
-                        setSortBy("id");
-                        setDirection("desc")
-                    }
-
-                    if(value === "priceAsc") {
-                        setSortBy("price");
-                        setDirection("asc");
-                    }
-
-                    if(value === "priceDesc") {
-                        setSortBy("price");
-                        setDirection("desc");
-                    }
-
-                    if(value === "nameAsc") {
-                        setSortBy("name");
-                        setDirection("asc");
-                    }
-
-                    if(value === "nameDesc") {
-                        setSortBy("name");
-                        setDirection("desc");
-                    }
-
-                    setPage(0);
-                }}
-            >
-
-                <option value="idAsc" >
-                    Newest First
-                </option>
-
-                <option value="idDesc" >
-                    Oldest First
-                </option>
-
-                <option value="priceAsc" >
-                    Price Low → High
-                </option>
-
-                <option value="priceDesc" >
-                    Price High → Low
-                </option>
-
-                <option value="nameAsc">
-                    Name A → Z
-                </option>
-
-                <option value="nameDesc">
-                    Name Z → A
-                </option>
-
-            </select>
 
             <div className="products-grid">
                 {filteredProducts.map(product => (
