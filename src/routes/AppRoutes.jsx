@@ -4,6 +4,7 @@ import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
+import Cart from "../pages/Cart";
 
 function AppRoutes() {
 
@@ -17,6 +18,12 @@ function AppRoutes() {
                 } 
             />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={
+                <ProtectedRoute>
+                    <Cart />
+                </ProtectedRoute>
+                }
+             />
             <Route path="/login" element={<Login />} />
         </Routes>
     );
