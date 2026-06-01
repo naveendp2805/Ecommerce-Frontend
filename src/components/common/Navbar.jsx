@@ -1,12 +1,34 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { logout } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { handleLogout } from "../../utils/AuthUtils";
 
 function Navbar() {
+
+    const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
     return (
         <nav >
             <Link to="/" style={{textDecoration: "none", color: "inherit"}} >Home</Link>{" | "}
             <Link to="/products" style={{textDecoration: "none", color: "inherit"}} >Products</Link>{" | "}
-            <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart</Link>{" | "}
-            <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>{" | "}
+
+            {isAuthenticated && (
+                <>
+                    <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart</Link>{" | "}
+                </>
+            )}
+            
+            {!isAuthenticated ? (
+                <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>  
+            ) : (
+                <button onClick={() => handleLogout(setIsAuthenticated, navigate)}>
+                    Logout
+                </button>
+            )}
         </nav>
     );
 }
