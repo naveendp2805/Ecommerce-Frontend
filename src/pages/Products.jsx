@@ -4,24 +4,26 @@ import ProductCard from "../components/product/ProductCard.jsx";
 import ProductFilters from "../components/product/ProductFilters.jsx";
 import "./Products.css";
 import { getAllCategories } from "../services/categoryService.jsx";
+import { addToCart } from "../services/cartService.jsx";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 function Products() {
 
     const [searchTerm, setSearchTerm] = useState("");
 
     const [categories, setCategories] = useState([]);
-
     const [selectedCategory, setSelectedCategory] = useState("");
 
     const [sortBy, setSortBy] = useState("id");
-
     const [direction, setDirection] = useState("asc");
 
     const [products, setProducts] = useState([]);
 
     const [page, setPage] = useState(0);
-
     const [totalPages, setTotalPages] = useState(0);
+
+    const { loadCart } = useContext(CartContext);
 
     useEffect(() => {
         loadProducts();
@@ -57,6 +59,19 @@ function Products() {
         }
     };
 
+    const handleAddToCart = async (productId) => {
+        try {
+            await addToCart(productId, 1);
+
+            await loadCart();
+
+            alert("Added To Cart");
+        } catch(error) {
+            console.error(error);
+            alert("Failed to add Product");
+        }
+    };
+
     const filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -82,7 +97,7 @@ function Products() {
 
             <div className="products-grid">
                 {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />  
+                <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />  
                 ))}
             </div>
 

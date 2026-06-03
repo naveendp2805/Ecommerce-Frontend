@@ -1,28 +1,37 @@
 import { Link } from "react-router-dom";
 import "./ProductCard.css"
 
-function ProductCard({product}) {
+function ProductCard({product, onAddToCart}) {
 
-    const imageUrl = import.meta.env.VITE_API_BASE_URL + product.imageUrl;
+    const imageUrl = product.imageUrl;
 
     return (
-        <Link to={`/products/${product.id}`} 
-              style={{textDecoration: "none", color: "inherit"}} >
-            <div className="product-card" >
+        
+        <div className="product-card" >
 
+            <Link to={`/products/${product.id}`} 
+                    style={{textDecoration: "none", color: "inherit"}} >
                 <img src={imageUrl} alt={product.name} className="product-image" />
 
                 <h2>Name: {product.name}</h2>
 
-                <p>Description: {product.description}</p>
+            </Link>
+            
+            <p>Description: {product.description}</p>
 
-                <p>Category: {product.category?.name}</p>
+            <p>Category: {product.category?.name}</p>
 
-                <p className="price" >Price: ₹{product.price}</p>
+            <p className="price" >Price: ₹{product.price}</p>
 
-                <p>Stock: {product.stockQuantity}</p>
-            </div>
-        </Link>
+            <p>Stock: {product.stockQuantity}</p>
+
+            <button disabled={product.stockQuantity === 0}
+                    onClick={() => onAddToCart(product.id)} >
+                {product.stockQuantity > 0
+                    ? "Add To Cart"
+                    : "Out of Stock"}
+            </button>
+        </div>
     );
 }
 

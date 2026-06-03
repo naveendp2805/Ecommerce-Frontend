@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { logout } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../utils/AuthUtils";
+import { CartContext } from "../../context/CartContext";
 
 function Navbar() {
 
     const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
 
     const navigate = useNavigate();
+
+    const { cartCount } = useContext(CartContext)
 
     return (
         <nav >
@@ -18,7 +20,7 @@ function Navbar() {
 
             {isAuthenticated && (
                 <>
-                    <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart</Link>{" | "}
+                    <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart ({cartCount})</Link>{" | "}
                 </>
             )}
             

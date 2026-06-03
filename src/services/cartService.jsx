@@ -19,3 +19,13 @@ export const clearCart = async () => {
     const response = await api.delete(`/api/cart/clear`);
     return response.data;
 };
+
+export const increaseQuantity = async (cartItemId) => {
+    const response = await api.patch(`/api/cart/item/${cartItemId}/increase`);
+    return response.data;
+};
+
+export const decreaseQuantity = async (cartItemId) => {
+    const response = await api.patch(`/api/cart/item/${cartItemId}/decrease`);
+    return response.data;
+};

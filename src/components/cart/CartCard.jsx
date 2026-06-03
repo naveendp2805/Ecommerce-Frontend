@@ -1,12 +1,26 @@
 import "./CartCard.css";
 
-function CartCard({ cartItem }) {
+function CartCard({ cartItem, onIncrease, onDecrease }) {
     return (
         <div className="cart-card" >
             <h3>{cartItem.productName}</h3>
             <p>Price: ₹{cartItem.price}</p>
             <p>Quantity: {cartItem.quantity}</p>
             <p>Sub Total: ₹{cartItem.subTotal}</p>
+
+            <div>
+                <button onClick={() => onDecrease(cartItem.cartItemId)} >
+                    -
+                </button>
+
+                <span style={{ margin: "0 10px" }}>
+                    {cartItem.quantity}
+                </span>
+
+                <button onClick={() => onIncrease(cartItem.cartItemId)} >
+                    +
+                </button>
+            </div>
         </div>
     );
 }
