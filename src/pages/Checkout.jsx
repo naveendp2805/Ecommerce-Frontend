@@ -1,9 +1,20 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { createOrder } from "../services/orderService";
 
 function Checkout() {
 
     const { cart } = useContext(CartContext);
+
+    const handlePlaceOrder = async () => {
+        try {
+            const order = await createOrder();
+
+            console.log(order);
+        } catch(error) {
+            console.error(error);
+        }
+    };
 
     if (!cart || cart.items.length === 0) {
         return (
@@ -41,7 +52,7 @@ function Checkout() {
 
             <h2>Total Amount: ₹{cart.totalAmount}</h2>
 
-            <button>
+            <button onClick={handlePlaceOrder}>
                 Place Order
             </button>
 
