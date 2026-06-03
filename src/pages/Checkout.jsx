@@ -1,8 +1,12 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { placeOrder } from "../services/orderService";
+import {createPaymentOrder, verifyPaymentOrder} from "../services/paymentService";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
+
+    const navigate = useNavigate();
 
     const { cart } = useContext(CartContext);
 
@@ -11,24 +15,62 @@ function Checkout() {
     const { loadCart } = useContext(CartContext);
 
     const handlePlaceOrder = async () => {
-        try {
-            setLoading(true);
 
+        setLoading(true);
+
+        try {
             const order = await placeOrder();
 
             console.log(order);
 
             alert("Order created successfully");
 
+            const paymentOrder = await createPaymentOrder(order.orderId);
+
+            const options = {
+
+                key: paymentOrder.key,
+
+                amount: paymentOrder.amountInPaise,
+
+                currency: paymentOrder.currency,
+
+                order_id: paymentOrder.razorpayOrderId,
+
+                name: "Naveen Ecommerce",
+
+                description: "Order Payment",
+
+                handler: async (response) => {
+                    try {
+
+                        await verifyPaymentOrder(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature);
+
+                        navigate("/payment-success");
+                    } catch(error) {
+
+                        console.error(error);
+
+                        alert("Payment Verification Failed");
+                    }
+                }
+
+            };
+
+            const razorpay = new window.Razorpay(options);
+
+            razorpay.open();
+
             await loadCart();
         } catch(error) {
             console.error(error);
 
-            alert(error.response?.data?.message || "Failed to place Order");
+            alert(error.response?.data?.message || "Payment Failed");
         } finally {
             setLoading(false);
         }
     };
+
 
     if (!cart || cart.items.length === 0) {
         return (

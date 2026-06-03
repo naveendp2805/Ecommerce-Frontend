@@ -7,6 +7,7 @@ import ProtectedRoute from "../components/auth/ProtectedRoute";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Order from "../pages/Order";
+import PaymentSuccess from "../pages/PaymentSuccess";
 
 function AppRoutes() {
 
@@ -37,6 +38,12 @@ function AppRoutes() {
                     <Order />
                 </ProtectedRoute>
             }
+            />
+            <Route path="/payment-success" element={
+                <ProtectedRoute>
+                    <PaymentSuccess />
+                </ProtectedRoute>
+            } 
             />
             <Route path="/login" element={<Login />} />
         </Routes>
