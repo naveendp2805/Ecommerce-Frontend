@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
+import Order from "../pages/Order";
 
 function AppRoutes() {
 
@@ -28,6 +29,12 @@ function AppRoutes() {
             <Route path="/checkout" element={
                 <ProtectedRoute>
                     <Checkout />
+                </ProtectedRoute>
+            }
+            />
+            <Route path="/orders" element={
+                <ProtectedRoute>
+                    <Order />
                 </ProtectedRoute>
             }
             />

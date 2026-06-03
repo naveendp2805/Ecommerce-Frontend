@@ -23,6 +23,8 @@ function Navbar() {
                     <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart ({cartCount})</Link>{" | "}
                 </>
             )}
+
+            <Link to="/orders" style={{textDecoration: "none", color: "inherit"}} >Orders</Link>{" | "}
             
             {!isAuthenticated ? (
                 <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>  

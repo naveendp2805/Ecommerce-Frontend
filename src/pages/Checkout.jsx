@@ -1,18 +1,32 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
-import { createOrder } from "../services/orderService";
+import { placeOrder } from "../services/orderService";
 
 function Checkout() {
 
     const { cart } = useContext(CartContext);
 
+    const [loading, setLoading] = useState(false);
+
+    const { loadCart } = useContext(CartContext);
+
     const handlePlaceOrder = async () => {
         try {
-            const order = await createOrder();
+            setLoading(true);
+
+            const order = await placeOrder();
 
             console.log(order);
+
+            alert("Order created successfully");
+
+            await loadCart();
         } catch(error) {
             console.error(error);
+
+            alert(error.response?.data?.message || "Failed to place Order");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -52,8 +66,10 @@ function Checkout() {
 
             <h2>Total Amount: ₹{cart.totalAmount}</h2>
 
-            <button onClick={handlePlaceOrder}>
-                Place Order
+            <button onClick={handlePlaceOrder} disabled={loading} >
+                {
+                    loading ? "Placing Order" : "Place Order"
+                }
             </button>
 
         </div>
