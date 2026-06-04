@@ -25,9 +25,15 @@ function Navbar() {
             )}
 
             <Link to="/orders" style={{textDecoration: "none", color: "inherit"}} >Orders</Link>{" | "}
+
+            <Link to="/profile" style={{textDecoration: "none", color: "inherit"}} >Profile</Link>{" | "}
             
             {!isAuthenticated ? (
-                <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>  
+                <>
+                    <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>{" | "}
+                
+                    <Link to="/register" style={{textDecoration: "none", color: "inherit"}} >Register</Link>  
+                </>
             ) : (
                 <button onClick={() => handleLogout(setIsAuthenticated, navigate)}>
                     Logout

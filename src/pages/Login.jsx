@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { login } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
@@ -13,8 +13,15 @@ function Login() {
 
     const [password, setPassword] = useState("");
 
-    const handleLogin = async () => {
+    const [loading, setLoading] = useState(false);
+
+    const handleLogin = async (e) => {
         try {
+
+            e.preventDefault();
+
+            setLoading(true);
+
             const data = await login(email, password);
 
             localStorage.setItem("accessToken", data.accessToken);
@@ -27,6 +34,13 @@ function Login() {
             console.log(data);
         } catch(error) {
             console.error(error);
+
+            alert(
+                error.response?.data?.message ||
+                "Invalid email or password"
+            );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -35,21 +49,36 @@ function Login() {
 
             <h1>Login</h1>
 
-            <input type="email" 
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-            />
+            <form onSubmit={handleLogin} >
+                <input type="email" 
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                />
 
-            <input type="password"
-                    placeholder="Enter Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-            />
+                <br />
 
-            <button onClick={handleLogin}>
-                Login
-            </button>
+                <input type="password"
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <br />
+
+                <button type="submit" disabled={loading} >
+                    {loading ? "Loggin in..." : "Login" }
+                </button>
+
+            </form>
+
+            <p>
+                New User?
+
+                <Link to="/register">
+                    Register
+                </Link>
+            </p>
 
         </div>
     );

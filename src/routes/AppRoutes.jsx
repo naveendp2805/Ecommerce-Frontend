@@ -8,6 +8,8 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Order from "../pages/Order";
 import PaymentSuccess from "../pages/PaymentSuccess";
+import UserProfile from "../pages/UserProfile";
+import Register from "../pages/Register";
 
 function AppRoutes() {
 
@@ -45,6 +47,13 @@ function AppRoutes() {
                 </ProtectedRoute>
             } 
             />
+            <Route path="/profile" element={
+                <ProtectedRoute>
+                    <UserProfile />
+                </ProtectedRoute>
+            } 
+            />
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
         </Routes>
     );
