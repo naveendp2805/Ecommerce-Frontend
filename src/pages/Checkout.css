@@ -1,0 +1,45 @@
+.checkout-container {
+
+    max-width: 900px;
+
+    margin: 30px auto;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.checkout-item {
+
+    margin-bottom: 20px;
+}
+
+.checkout-total {
+
+    text-align: center;
+
+    margin-top: 20px;
+}
+
+.checkout-button {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: green;
+
+    color: white;
+
+    font-size: 18px;
+}

@@ -8,12 +8,12 @@ function CartCard({ cartItem, onIncrease, onDecrease }) {
             <p>Quantity: {cartItem.quantity}</p>
             <p>Sub Total: ₹{cartItem.subTotal}</p>
 
-            <div>
+            <div className="cart-actions">
                 <button onClick={() => onDecrease(cartItem.cartItemId)} >
                     -
                 </button>
 
-                <span style={{ margin: "0 10px" }}>
+                <span className="quantity">
                     {cartItem.quantity}
                 </span>
 

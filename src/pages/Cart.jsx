@@ -1,10 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { clearCart, getCart, increaseQuantity, decreaseQuantity, removeCartItem } from "../services/cartService";
 import CartCard from "../components/cart/CartCard";
 import { CartContext } from "../context/CartContext";
+import "./Cart.css";
+import PageWrapper from "../layouts/PageWrapper";
 
 function Cart() {
+
+    const navigate = useNavigate();
 
     const [cart, setCart] = useState(null);
 
@@ -87,31 +91,30 @@ function Cart() {
     }
 
     return (
-        <div>
-            <h1>Cart</h1>
+        <PageWrapper title="Cart" >
+            <div className="cart-container">
 
-            {cart.items.map(cartItem => (
-                <CartCard key={cartItem.cartItemId}
-                            cartItem={cartItem}
-                            onIncrease={handleIncrease}
-                            onDecrease={handleDecrease} 
-                />
-            ))}
+                {cart.items.map(cartItem => (
+                    <CartCard key={cartItem.cartItemId}
+                                cartItem={cartItem}
+                                onIncrease={handleIncrease}
+                                onDecrease={handleDecrease} 
+                    />
+                ))}
 
-            <h2>Total: ₹{cart.totalAmount}</h2>
+                <h2 className="cart-total" >Total: ₹{cart.totalAmount}</h2>
 
-            <div>
-                <button onClick={handleClearCart}>
-                    Clear Cart
-                </button>
+                <div className="cart-footer">
+                    <button onClick={handleClearCart} className="clear-cart-btn">
+                        Clear Cart
+                    </button>
 
-                <Link to="/checkout" >
-                    <button>
+                    <button className="checkout-btn" onClick={() => navigate("/checkout")}>
                         Proceed to checkout
                     </button>
-                </Link>
+                </div>
             </div>
-        </div>
+        </PageWrapper>
     );
 }
 

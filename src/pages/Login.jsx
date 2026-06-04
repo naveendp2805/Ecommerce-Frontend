@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { login } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./LoginAndRegister.css";
 
 function Login() {
     
@@ -45,41 +46,43 @@ function Login() {
     };
 
     return (
-        <div>
+        <div className="auth-container" >
+            <div className="auth-card">
 
-            <h1>Login</h1>
+                <h1>Login</h1>
 
-            <form onSubmit={handleLogin} >
-                <input type="email" 
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                />
+                <form onSubmit={handleLogin} >
+                    <input type="email" 
+                            placeholder="Enter Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                <br />
+                    <br />
 
-                <input type="password"
-                        placeholder="Enter Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                />
+                    <input type="password"
+                            placeholder="Enter Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                <br />
+                    <br />
 
-                <button type="submit" disabled={loading} >
-                    {loading ? "Loggin in..." : "Login" }
-                </button>
+                    <button type="submit" disabled={loading} >
+                        {loading ? "Loggin in..." : "Login" }
+                    </button>
 
-            </form>
+                </form>
 
-            <p>
-                New User?
+                <p>
+                    New User?
 
-                <Link to="/register">
-                    Register
-                </Link>
-            </p>
+                    <Link to="/register">
+                        Register
+                    </Link>
+                </p>
 
+            </div>
         </div>
     );
 } 

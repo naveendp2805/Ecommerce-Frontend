@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMyOrders } from "../services/orderService";
 import OrderCard from "../components/order/OrderCard";
 import "./Order.css";
+import PageWrapper from "../layouts/PageWrapper";
 
 function Order() {
 
@@ -35,39 +36,39 @@ function Order() {
     if(orders.length === 0) return <h2>No Orders Found</h2>;
 
     return (
-        <div>
+        <PageWrapper title="My Orders" >
+            <div className="orders-container">
 
-            <h1>My Orders</h1>
+                <div className="orders-grid" >
+                    {orders.map(order => (
+                        <OrderCard className="order-card" key={order.orderId} order={order} />
+                    ))}
+                </div>
 
-            <div className="orders-grid" >
-                {orders.map(order => (
-                    <OrderCard key={order.orderId} order={order} />
-                ))}
+                <div>
+
+                    <button
+                        disabled={page === 0}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        Previous
+                    </button>
+
+                    <span>
+                        Page {page + 1} of {totalPages}
+                    </span>
+
+                    <button
+                        disabled={page + 1 >= totalPages}
+                        onClick={() => setPage(page + 1)}
+                    >
+                        Next
+                    </button>
+
+                </div>
+
             </div>
-
-            <div>
-
-                <button
-                    disabled={page === 0}
-                    onClick={() => setPage(page - 1)}
-                >
-                    Previous
-                </button>
-
-                <span>
-                    Page {page + 1} of {totalPages}
-                </span>
-
-                <button
-                    disabled={page + 1 >= totalPages}
-                    onClick={() => setPage(page + 1)}
-                >
-                    Next
-                </button>
-
-            </div>
-
-        </div>
+        </PageWrapper>
     );
 }
 

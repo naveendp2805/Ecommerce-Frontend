@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { deleteProfileImage, getProfile, updateProfile, uploadProfileImage } from "../services/userProfileService";
-
+import PageWrapper from "../layouts/PageWrapper";
+import "./UserProfile.css";
+import {FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaFileAlt, FaCamera, FaEllipsisV} from "react-icons/fa";
 
 function UserProfile() {
 
     const [profile, setProfile] = useState(null);
 
     const [loading, setLoading] = useState(true);
+
+    const [showImageMenu, setShowImageMenu] = useState(false);
+
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         loadProfile();
@@ -44,6 +50,8 @@ function UserProfile() {
 
             setProfile(updatedProfile);
 
+            setIsEditing(false);
+
             alert("Profile updated successfully");
         } catch(error) {
             console.error(error);
@@ -65,7 +73,7 @@ function UserProfile() {
         }
     };
 
-    const handleDeleteImage = async () => {
+    const handleImageDelete = async () => {
         try {
             await deleteProfileImage();
 
@@ -80,85 +88,187 @@ function UserProfile() {
     if(!profile) return <h2>Profile not found</h2>;
 
     return (
-        <div>
+        <PageWrapper title="My Profile" >
+            
+            <div className="profile-container">
 
-            <h1>My Profile</h1>
+                <div className="profile-header">
 
-            {profile?.profileImageUrl && (<img src={profile.profileImageUrl} alt="Profile" width="150" /> )}
+                    <div className="profile-image-wrapper">
 
-            <br />
+                        <img
+                            src={
+                                profile?.profileImageUrl ||
+                                "https://via.placeholder.com/180"
+                            }
+                            alt="Profile"
+                            className="profile-image"
+                        />
 
-            <input type="file" onChange={handleImageUpload} />
+                        {isEditing && (
+                            <button
+                                className="image-menu-btn"
+                                onClick={() => setShowImageMenu(!showImageMenu)}
+                            >
+                                <FaCamera />
+                            </button>
+                        )}
 
-            <button onClick={handleDeleteImage} >
-                Delete Image
-            </button>
+                        {showImageMenu && (
+                            <div className="image-menu">
 
-            <hr />
+                                <label
+                                    htmlFor="profile-upload"
+                                    className="menu-item"
+                                >
+                                    Edit Profile Image
+                                </label>
 
-            <input
-                name="name"
-                value={profile.name || ""}
-                onChange={handleChange}
-                placeholder="Name"
-            />
+                                <button
+                                    className="menu-item remove-btn"
+                                    onClick={handleImageDelete}
+                                >
+                                    Remove Profile Image
+                                </button>
 
-            <input
-                name="phoneNumber"
-                value={
-                    profile.phoneNumber || ""
-                }
-                onChange={handleChange}
-                placeholder="Phone Number"
-            />
+                            </div>
+                        )}
 
-            <input
-                type="date"
-                name="dateOfBirth"
-                value={
-                    profile.dateOfBirth || ""
-                }
-                onChange={handleChange}
-            />
+                        <input
+                            id="profile-upload"
+                            type="file"
+                            onChange={handleImageUpload}
+                            hidden
+                        />
 
-            <select
-                name="gender"
-                value={
-                    profile.gender || ""
-                }
-                onChange={handleChange}
-            >
-                <option value="">
-                    Select Gender
-                </option>
+                    </div>
 
-                <option value="MALE">
-                    MALE
-                </option>
+                    <h2 className="profile-name">
+                        {profile?.name}
+                    </h2>
 
-                <option value="FEMALE">
-                    FEMALE
-                </option>
+                    <p className="profile-email">
+                        {profile?.email}
+                    </p>
 
-                <option value="OTHER" >
-                    OTHERS
-                </option>
-            </select>
+                    <div className="profile-actions">
 
-            <textarea
-                name="bio"
-                value={profile.bio || ""}
-                onChange={handleChange}
-                placeholder="Bio"
-            />
+                        <button
+                            className="edit-btn"
+                            onClick={() => setIsEditing(true)}
+                        >
+                            Edit Profile
+                        </button>
 
-            <button
-                onClick={handleUpdate}
-            >
-                Save Profile
-            </button>
+                    </div>
 
-        </div>
+                </div>
+
+                <div className="section">
+
+                    <h3>
+                        Personal Information
+                    </h3>
+
+                    <label>
+                        <FaUser />
+                        {" "}Name
+                    </label>
+
+                    <input
+                        name="name"
+                        value={profile.name || ""}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                    />
+
+                    <label>
+                        <FaPhone />
+                        {" "}Phone Number
+                    </label>
+
+                    <input
+                        name="phoneNumber"
+                        value={profile.phoneNumber || ""}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                    />
+
+                </div>
+
+                <div className="section">
+
+                    <h3>
+                        Additional Information
+                    </h3>
+
+                    <label>
+                        <FaCalendarAlt />
+                        {" "}Date Of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        name="dateOfBirth"
+                        value={profile.dateOfBirth || ""}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                    />
+
+                    <label>
+                        <FaVenusMars />
+                        {" "}Gender
+                    </label>
+
+                    <select
+                        name="gender"
+                        value={profile.gender || ""}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                    >
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="MALE">
+                            MALE
+                        </option>
+
+                        <option value="FEMALE">
+                            FEMALE
+                        </option>
+
+                        <option value="OTHER">
+                            OTHER
+                        </option>
+                    </select>
+
+                    <label>
+                        <FaFileAlt />
+                        {" "}Bio
+                    </label>
+
+                    <textarea
+                        name="bio"
+                        value={profile.bio || ""}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                    />
+
+                </div>
+
+                {isEditing && (
+                    <button
+                        className="save-btn"
+                        onClick={handleUpdate}
+                    >
+                        Save Changes
+                    </button>
+                )}
+
+            </div>
+
+        </PageWrapper>
     );
 }
 

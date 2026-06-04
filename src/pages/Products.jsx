@@ -7,6 +7,7 @@ import { getAllCategories } from "../services/categoryService.jsx";
 import { addToCart } from "../services/cartService.jsx";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import PageWrapper from "../layouts/PageWrapper";
 
 function Products() {
 
@@ -77,44 +78,45 @@ function Products() {
     );
 
     return (
-        <div>
-            <h1>Products</h1>
-
-            <ProductFilters 
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-
-                categories={categories}
-
-                selectedCategory={selectedCategory}
-                setSelectedCategory={setSelectedCategory}
-
-                setPage={setPage}
-
-                setSortBy={setSortBy}
-                setDirection={setDirection}
-            />
-
-            <div className="products-grid">
-                {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />  
-                ))}
-            </div>
-
+        <PageWrapper title="Products">
             <div>
-                <button disabled={page === 0} onClick={() => setPage(page - 1)} >
-                    Previous
-                </button>
 
-                <span>
-                    Page {page + 1} of {totalPages}
-                </span>
+                <ProductFilters 
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
 
-                <button disabled={page + 1 >= totalPages} onClick={() => setPage(page + 1)} >
-                    Next
-                </button>
+                    categories={categories}
+
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+
+                    setPage={setPage}
+
+                    setSortBy={setSortBy}
+                    setDirection={setDirection}
+                />
+
+                <div className="products-grid">
+                    {filteredProducts.map(product => (
+                    <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />  
+                    ))}
+                </div>
+
+                <div>
+                    <button disabled={page === 0} onClick={() => setPage(page - 1)} >
+                        Previous
+                    </button>
+
+                    <span>
+                        Page {page + 1} of {totalPages}
+                    </span>
+
+                    <button disabled={page + 1 >= totalPages} onClick={() => setPage(page + 1)} >
+                        Next
+                    </button>
+                </div>
             </div>
-        </div>
+        </PageWrapper>
     );
 }
 

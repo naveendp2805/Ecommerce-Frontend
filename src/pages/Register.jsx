@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { register, login } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./LoginAndRegister.css";
 
 function Register() {
 
@@ -70,90 +71,92 @@ function Register() {
 
     return (
 
-        <div>
+        <div className="auth-container">
+            <div className="auth-card">
 
-            <h1>Register</h1>
+                <h1>Register</h1>
 
-            <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <br />
+                    <br />
 
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <br />
+                    <br />
 
-                <input
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="Phone Number"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="text"
+                        name="phoneNumber"
+                        placeholder="Phone Number"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <br />
+                    <br />
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <br />
+                    <br />
 
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    value={
-                        formData.confirmPassword
-                    }
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        value={
+                            formData.confirmPassword
+                        }
+                        onChange={handleChange}
+                        required
+                    />
 
-                <br />
+                    <br />
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {
-                        loading
-                            ? "Registering..."
-                            : "Register"
-                    }
-                </button>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {
+                            loading
+                                ? "Registering..."
+                                : "Register"
+                        }
+                    </button>
 
-            </form>
+                </form>
 
-            <p>
-                Already have an account?
+                <p>
+                    Already have an account?
 
-                <Link to="/login">
-                    Login
-                </Link>
-            </p>
+                    <Link to="/login">
+                        Login
+                    </Link>
+                </p>
 
+            </div>
         </div>
     );
 }

@@ -3,6 +3,8 @@ import { CartContext } from "../context/CartContext";
 import { placeOrder } from "../services/orderService";
 import {createPaymentOrder, verifyPaymentOrder} from "../services/paymentService";
 import { useNavigate } from "react-router-dom";
+import "./Checkout.css";
+import PageWrapper from "../layouts/PageWrapper";
 
 function Checkout() {
 
@@ -82,39 +84,39 @@ function Checkout() {
     }
 
     return (
-        <div>
+        <PageWrapper title="Checkout" >
+            <div className="checkout-container">
 
-            <h1>Checkout</h1>
+                <h2>Order Summary</h2>
 
-            <h2>Order Summary</h2>
+                {cart.items.map(item => (
 
-            {cart.items.map(item => (
+                    <div key={item.cartItemId} className="checkout.item">
 
-                <div key={item.cartItemId}>
+                        <h3>{item.productName}</h3>
 
-                    <h3>{item.productName}</h3>
+                        <p>Price: ₹{item.price}</p>
 
-                    <p>Price: ₹{item.price}</p>
+                        <p>Quantity: {item.quantity}</p>
 
-                    <p>Quantity: {item.quantity}</p>
+                        <p>Subtotal: ₹{item.subTotal}</p>
 
-                    <p>Subtotal: ₹{item.subTotal}</p>
+                        <hr />
 
-                    <hr />
+                    </div>
 
-                </div>
+                ))}
 
-            ))}
+                <h2 className="checkout-total">Total Amount: ₹{cart.totalAmount}</h2>
 
-            <h2>Total Amount: ₹{cart.totalAmount}</h2>
+                <button className="checkout-button" onClick={handlePlaceOrder} disabled={loading} >
+                    {
+                        loading ? "Placing Order" : "Place Order"
+                    }
+                </button>
 
-            <button onClick={handlePlaceOrder} disabled={loading} >
-                {
-                    loading ? "Placing Order" : "Place Order"
-                }
-            </button>
-
-        </div>
+            </div>
+        </PageWrapper>
     );
 }
 
