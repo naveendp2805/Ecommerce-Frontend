@@ -7,6 +7,8 @@ import "./Cart.css";
 import PageWrapper from "../layouts/PageWrapper";
 import { toast } from "react-toastify";
 import Loader from "../components/common/Loader";
+import EmptyState from "../components/common/EmptyState";
+import { FaShoppingCart } from "react-icons/fa";
 
 function Cart() {
 
@@ -73,11 +75,13 @@ function Cart() {
 
     if (!cart || cart.items.length === 0) {
         return (
-            <div>
-                <h1>Cart</h1>
-
-                <h2>Your cart is empty</h2>
-            </div>
+            <PageWrapper title="Cart">
+                <EmptyState
+                    icon={<FaShoppingCart />}
+                    title="Your cart is empty"
+                    message="Start shopping and add products to your cart."
+                />
+            </PageWrapper>
         );
     }
 

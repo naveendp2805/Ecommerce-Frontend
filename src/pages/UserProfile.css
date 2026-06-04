@@ -289,3 +289,28 @@
 
     background: #dc2626;
 }
+
+.profile-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.logout-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.logout-btn:hover {
+    background-color: #dc2626;
+}

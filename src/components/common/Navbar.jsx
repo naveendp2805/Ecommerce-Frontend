@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../utils/AuthUtils";
 import { CartContext } from "../../context/CartContext";
 import "./Navbar.css"
+import { FaHome, FaBoxOpen, FaShoppingCart, FaClipboardList, FaUser, FaSignInAlt } from "react-icons/fa";
 
 function Navbar() {
 
@@ -16,29 +17,43 @@ function Navbar() {
 
     return (
         <nav className="navbar">
-            <Link to="/" style={{textDecoration: "none", color: "inherit"}} >Home</Link>
-            <Link to="/products" style={{textDecoration: "none", color: "inherit"}} >Products</Link>
+            <Link to="/" style={{textDecoration: "none", color: "inherit"}} >
+                <FaHome />
+                <span>Home</span>
+            </Link>
+
+            <Link to="/products" style={{textDecoration: "none", color: "inherit"}} >
+                <FaBoxOpen />
+                <span>Products</span>
+            </Link>
 
             {isAuthenticated && (
                 <>
-                    <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >Cart ({cartCount})</Link>
+                    <Link to="/cart" style={{textDecoration: "none", color: "inherit"}} >
+                        <FaShoppingCart />
+                        <span>Cart ({cartCount})</span>
+                    </Link>
                 </>
             )}
 
-            <Link to="/orders" style={{textDecoration: "none", color: "inherit"}} >Orders</Link>
+            <Link to="/orders" style={{textDecoration: "none", color: "inherit"}} >
+                <FaClipboardList />
+                <span>Orders</span>
+            </Link>
 
-            <Link to="/profile" style={{textDecoration: "none", color: "inherit"}} >Profile</Link>
+            <Link to="/profile" style={{textDecoration: "none", color: "inherit"}} >
+                <FaUser />
+                <span>Profile</span>
+            </Link>
             
-            {!isAuthenticated ? (
+            {!isAuthenticated && (
                 <>
-                    <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >Login</Link>
+                    <Link to="/login" style={{textDecoration: "none", color: "inherit"}} >
+                        <FaSignInAlt />
+                        <span>SignIn</span>
+                    </Link>
                 
-                    <Link to="/register" style={{textDecoration: "none", color: "inherit"}} >Register</Link>  
                 </>
-            ) : (
-                <button onClick={() => handleLogout(setIsAuthenticated, navigate)}>
-                    Logout
-                </button>
             )}
         </nav>
     );

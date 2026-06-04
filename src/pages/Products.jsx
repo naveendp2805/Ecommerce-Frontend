@@ -10,6 +10,8 @@ import { CartContext } from "../context/CartContext";
 import PageWrapper from "../layouts/PageWrapper";
 import { toast } from "react-toastify";
 import Loader from "../components/common/Loader";
+import EmptyState from "../components/common/EmptyState";
+import { FaSearch } from "react-icons/fa";
 
 function Products() {
 
@@ -28,7 +30,8 @@ function Products() {
 
     const { loadCart } = useContext(CartContext);
 
-    const [loading, setLoading] = useState(false);
+    const [productsLoading, setProductsLoading] = useState(false);
+    const [categoriesLoading, setCategoriesLoading] = useState(false);
 
     useEffect(() => {
         loadProducts();
@@ -40,7 +43,7 @@ function Products() {
 
     const loadProducts = async () => {
 
-        setLoading(true);
+        setProductsLoading(true);
         
         try {
             if(selectedCategory) {
@@ -56,13 +59,13 @@ function Products() {
         } catch (error) {
             console.error(error);
         } finally {
-            setLoading(false);
+            setProductsLoading(false);
         }
     };
 
     const loadCategories = async () => {
 
-        setLoading(true);
+        setCategoriesLoading(true);
 
         try {
             const data = await getAllCategories();
@@ -70,7 +73,7 @@ function Products() {
         } catch(error) {
             console.error(error);
         } finally {
-            setLoading(false);
+            setCategoriesLoading(false);
         }
     };
 
@@ -91,7 +94,7 @@ function Products() {
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if(loading) return <Loader />;
+    if(productsLoading || categoriesLoading) return <Loader />;
 
     return (
         <PageWrapper title="Products">
@@ -112,11 +115,23 @@ function Products() {
                     setDirection={setDirection}
                 />
 
-                <div className="products-grid">
-                    {filteredProducts.map(product => (
-                    <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />  
-                    ))}
-                </div>
+                {filteredProducts.length === 0 ? (
+                    <EmptyState
+                        icon={<FaSearch />}
+                        title="No Products Found"
+                        message="Try changing your search or filters."
+                    />
+                ) : (
+                    <div className="products-grid">
+                        {filteredProducts.map(product => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                onAddToCart={handleAddToCart}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 <div>
                     <button disabled={page === 0} onClick={() => setPage(page - 1)} >

@@ -36,3 +36,10 @@
 
     cursor: pointer;
 }
+
+.navbar a,
+.navbar button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

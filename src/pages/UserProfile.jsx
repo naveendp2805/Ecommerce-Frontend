@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteProfileImage, getProfile, updateProfile, uploadProfileImage } from "../services/userProfileService";
 import PageWrapper from "../layouts/PageWrapper";
 import "./UserProfile.css";
-import {FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaFileAlt, FaCamera, FaEllipsisV} from "react-icons/fa";
+import {FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaFileAlt, FaCamera, FaSignOutAlt} from "react-icons/fa";
 import { toast } from "react-toastify";
 import Loader from "../components/common/Loader";
+import { handleLogout } from "../utils/AuthUtils";
+import { AuthContext } from "../context/AuthContext";
 
 function UserProfile() {
+
+    const navigate = useNavigate(); 
+    const { setIsAuthenticated } = useContext(AuthContext);
 
     const [profile, setProfile] = useState(null);
 
@@ -83,6 +89,10 @@ function UserProfile() {
         } catch(error) {
             console.error(error);
         }
+    };
+
+    const logoutUser = () => {
+        handleLogout(setIsAuthenticated, navigate);
     };
 
     if(loading) return <Loader />;
@@ -267,6 +277,16 @@ function UserProfile() {
                         Save Changes
                     </button>
                 )}
+
+                <div className="profile-actions">
+                    <button
+                        className="logout-btn"
+                        onClick={logoutUser}
+                    >
+                        <FaSignOutAlt />
+                        <span>Logout</span>
+                    </button>
+                </div>
 
             </div>
 

@@ -4,6 +4,8 @@ import OrderCard from "../components/order/OrderCard";
 import "./Order.css";
 import PageWrapper from "../layouts/PageWrapper";
 import Loader from "../components/common/Loader";
+import EmptyState from "../components/common/EmptyState";
+import { FaBox } from "react-icons/fa";
 
 function Order() {
 
@@ -34,7 +36,16 @@ function Order() {
 
     if(loading) return <Loader />;
 
-    if(orders.length === 0) return <h2>No Orders Found</h2>;
+    if(orders.length === 0) 
+        return (
+        <PageWrapper title="Cart">
+            <EmptyState
+                icon={<FaBox />}
+                title="No Orders Yet"
+                message="Place your first order to see it here."
+            />
+        </PageWrapper>
+    );
 
     return (
         <PageWrapper title="My Orders" >
