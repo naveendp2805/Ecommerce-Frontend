@@ -5,6 +5,8 @@ import CartCard from "../components/cart/CartCard";
 import { CartContext } from "../context/CartContext";
 import "./Cart.css";
 import PageWrapper from "../layouts/PageWrapper";
+import { toast } from "react-toastify";
+import Loader from "../components/common/Loader";
 
 function Cart() {
 
@@ -31,17 +33,6 @@ function Cart() {
         }
     };
 
-    const handleRemove = async (cartItemId) => {
-        try {
-            await removeCartItem(cartItemId);
-            
-            await loadCartPage();
-            await loadCart();
-        } catch(error) {
-            console.error(error);
-        }
-    };
-
     const handleIncrease = async (cartItemId) => {
         try {
             await increaseQuantity(cartItemId);
@@ -50,7 +41,7 @@ function Cart() {
             await loadCart();
         } catch(error) {
             console.error(error);
-            alert( error.response?.data?.message || "Failed to increase quantity");
+            toast.error( error.response?.data?.message || "Failed to increase quantity");
         }
     };
 
@@ -63,7 +54,7 @@ function Cart() {
         } catch(error) {
             console.error(error);
 
-            alert( error.response?.data?.message || "Failed to decrease quantity");
+            toast.error( error.response?.data?.message || "Failed to decrease quantity");
         }
     };
 
@@ -78,7 +69,7 @@ function Cart() {
         }
     }
 
-    if(loading) return <h2>Loading....</h2>;
+    if(loading) return <Loader />;
 
     if (!cart || cart.items.length === 0) {
         return (

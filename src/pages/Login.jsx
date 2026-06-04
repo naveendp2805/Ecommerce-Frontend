@@ -3,6 +3,7 @@ import { login } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./LoginAndRegister.css";
+import { toast } from "react-toastify";
 
 function Login() {
     
@@ -36,7 +37,7 @@ function Login() {
         } catch(error) {
             console.error(error);
 
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Invalid email or password"
             );

@@ -3,6 +3,7 @@ import { getMyOrders } from "../services/orderService";
 import OrderCard from "../components/order/OrderCard";
 import "./Order.css";
 import PageWrapper from "../layouts/PageWrapper";
+import Loader from "../components/common/Loader";
 
 function Order() {
 
@@ -31,7 +32,7 @@ function Order() {
         }
     };
 
-    if(loading) return <h2>Loading...</h2>;
+    if(loading) return <Loader />;
 
     if(orders.length === 0) return <h2>No Orders Found</h2>;
 

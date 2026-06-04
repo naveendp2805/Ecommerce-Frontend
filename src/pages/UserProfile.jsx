@@ -3,6 +3,8 @@ import { deleteProfileImage, getProfile, updateProfile, uploadProfileImage } fro
 import PageWrapper from "../layouts/PageWrapper";
 import "./UserProfile.css";
 import {FaUser, FaPhone, FaCalendarAlt, FaVenusMars, FaFileAlt, FaCamera, FaEllipsisV} from "react-icons/fa";
+import { toast } from "react-toastify";
+import Loader from "../components/common/Loader";
 
 function UserProfile() {
 
@@ -52,7 +54,7 @@ function UserProfile() {
 
             setIsEditing(false);
 
-            alert("Profile updated successfully");
+            toast.success("Profile updated successfully");
         } catch(error) {
             console.error(error);
         }
@@ -83,7 +85,7 @@ function UserProfile() {
         }
     };
 
-    if(loading) return <h2>Loading...</h2>;
+    if(loading) return <Loader />;
 
     if(!profile) return <h2>Profile not found</h2>;
 

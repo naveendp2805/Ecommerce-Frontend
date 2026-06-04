@@ -3,6 +3,7 @@ import { register, login } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./LoginAndRegister.css";
+import { toast } from "react-toastify";
 
 function Register() {
 
@@ -32,7 +33,7 @@ function Register() {
         e.preventDefault();
 
         if(formData.password !== formData.confirmPassword) {
-            alert("Password do not match");
+            toast.error("Password do not match");
 
             return;
         }
@@ -50,7 +51,7 @@ function Register() {
 
             setIsAuthenticated(true);
 
-            alert("Registration Successful");
+            toast.success("Registration Successful");
 
             navigate("/products");
 
@@ -58,7 +59,7 @@ function Register() {
 
             console.error(error);
 
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Registration Failed"
             );

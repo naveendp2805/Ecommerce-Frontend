@@ -4,6 +4,8 @@ import { getProductById } from "../services/productService";
 import { addToCart } from "../services/cartService";
 import "./ProductDetails.css";
 import PageWrapper from "../layouts/PageWrapper";
+import { toast } from "react-toastify";
+import Loader from "../components/common/Loader";
 
 function ProductDetails() {
 
@@ -11,16 +13,23 @@ function ProductDetails() {
 
     const [product, setProduct] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         loadProduct();
     }, [id]);
 
     const loadProduct = async () => {
+
+        setLoading(true);
+
         try {
             const data = await getProductById(id);
             setProduct(data);
         } catch(error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -28,15 +37,17 @@ function ProductDetails() {
         try {
             await addToCart(product.id, 1);
 
-            alert("Product added to Cart");
+            toast.success("Product added to Cart");
 
         } catch(error) {
 
             console.error(error);
 
-            alert("Failed to add Product");
+            toast.error("Failed to add Product");
         }
     };
+
+    if(loading) return <Loader />;
 
     if(!product)
         return <h2>Loading...</h2>;

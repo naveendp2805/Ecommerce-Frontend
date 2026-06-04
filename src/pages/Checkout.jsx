@@ -5,6 +5,7 @@ import {createPaymentOrder, verifyPaymentOrder} from "../services/paymentService
 import { useNavigate } from "react-router-dom";
 import "./Checkout.css";
 import PageWrapper from "../layouts/PageWrapper";
+import { toast } from "react-toastify";
 
 function Checkout() {
 
@@ -25,7 +26,7 @@ function Checkout() {
 
             console.log(order);
 
-            alert("Order created successfully");
+            toast.success("Order created successfully");
 
             const paymentOrder = await createPaymentOrder(order.orderId);
 
@@ -53,7 +54,7 @@ function Checkout() {
 
                         console.error(error);
 
-                        alert("Payment Verification Failed");
+                        toast.error("Payment Verification Failed");
                     }
                 }
 
@@ -67,7 +68,7 @@ function Checkout() {
         } catch(error) {
             console.error(error);
 
-            alert(error.response?.data?.message || "Payment Failed");
+            toast.error(error.response?.data?.message || "Payment Failed");
         } finally {
             setLoading(false);
         }

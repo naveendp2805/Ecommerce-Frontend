@@ -8,6 +8,8 @@ import { addToCart } from "../services/cartService.jsx";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import PageWrapper from "../layouts/PageWrapper";
+import { toast } from "react-toastify";
+import Loader from "../components/common/Loader";
 
 function Products() {
 
@@ -26,6 +28,8 @@ function Products() {
 
     const { loadCart } = useContext(CartContext);
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         loadProducts();
     }, [page, selectedCategory, sortBy, direction]);
@@ -35,6 +39,9 @@ function Products() {
     }, []);
 
     const loadProducts = async () => {
+
+        setLoading(true);
+        
         try {
             if(selectedCategory) {
                 const data = await getProductsByCategory(selectedCategory);
@@ -48,15 +55,22 @@ function Products() {
             setTotalPages(data.totalPages);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const loadCategories = async () => {
+
+        setLoading(true);
+
         try {
             const data = await getAllCategories();
             setCategories(data);
         } catch(error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -66,16 +80,18 @@ function Products() {
 
             await loadCart();
 
-            alert("Added To Cart");
+            toast.success("Added To Cart");
         } catch(error) {
             console.error(error);
-            alert("Failed to add Product");
+            toast.error("Failed to add Product");
         }
     };
 
     const filteredProducts = products.filter(product =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if(loading) return <Loader />;
 
     return (
         <PageWrapper title="Products">
