@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./LoginAndRegister.css";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
     
@@ -17,6 +18,8 @@ function Login() {
 
     const [loading, setLoading] = useState(false);
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const handleLogin = async (e) => {
         try {
 
@@ -28,6 +31,7 @@ function Login() {
 
             localStorage.setItem("accessToken", data.accessToken);
             localStorage.setItem("refreshToken", data.refreshToken);
+            localStorage.setItem("user", JSON.stringify({userId: data.userId, email: data.email, role: data.role}));
 
             setIsAuthenticated(true);
 
@@ -57,19 +61,28 @@ function Login() {
                             placeholder="Enter Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                     />
 
                     <br />
 
-                    <input type="password"
-                            placeholder="Enter Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div className="password-field" >
+                        
+                        <input type={showPassword ? "text" : "password"}
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required
+                        />
+
+                        <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} >
+                            {showPassword ? <FaEyeSlash /> : <FaEye /> }
+                        </button>
+                    </div>
 
                     <br />
 
-                    <button type="submit" disabled={loading} >
+                    <button type="submit" disabled={loading} className="auth-btn" >
                         {loading ? "Loggin in..." : "Login" }
                     </button>
 

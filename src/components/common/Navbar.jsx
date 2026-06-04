@@ -2,16 +2,17 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { handleLogout } from "../../utils/AuthUtils";
 import { CartContext } from "../../context/CartContext";
 import "./Navbar.css"
-import { FaHome, FaBoxOpen, FaShoppingCart, FaClipboardList, FaUser, FaSignInAlt } from "react-icons/fa";
+import { FaHome, FaBoxOpen, FaShoppingCart, FaClipboardList, FaUser, FaSignInAlt, FaTools } from "react-icons/fa";
 
 function Navbar() {
 
     const {isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
 
     const navigate = useNavigate();
+
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const { cartCount } = useContext(CartContext)
 
@@ -36,15 +37,26 @@ function Navbar() {
                 </>
             )}
 
-            <Link to="/orders" style={{textDecoration: "none", color: "inherit"}} >
-                <FaClipboardList />
-                <span>Orders</span>
-            </Link>
+            {isAuthenticated && (
+                <Link to="/orders" style={{textDecoration: "none", color: "inherit"}}>
+                    <FaClipboardList />
+                    <span>Orders</span>
+                </Link>
+            )}
 
-            <Link to="/profile" style={{textDecoration: "none", color: "inherit"}} >
-                <FaUser />
-                <span>Profile</span>
-            </Link>
+            {user?.role === "ADMIN" && (
+                <Link to="/admin" style={{textDecoration: "none", color: "inherit"}}>
+                    <FaTools />
+                    <span>Admin</span>
+                </Link>
+            )}
+
+            {isAuthenticated && (
+                <Link to="/profile" style={{textDecoration: "none", color: "inherit"}}>
+                    <FaUser />
+                    <span>Profile</span>
+                </Link>
+            )}
             
             {!isAuthenticated && (
                 <>

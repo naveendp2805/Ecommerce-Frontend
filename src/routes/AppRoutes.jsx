@@ -10,6 +10,9 @@ import Order from "../pages/Order";
 import PaymentSuccess from "../pages/PaymentSuccess";
 import UserProfile from "../pages/UserProfile";
 import Register from "../pages/Register";
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminRoute from "../components/auth/AdminRoute";
+import AdminProducts from "../pages/admin/AdminProducts";
 
 function AppRoutes() {
 
@@ -55,6 +58,21 @@ function AppRoutes() {
             />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+
+            {/*Admin Routes*/}
+
+            <Route path="/admin" element={
+                <AdminRoute>
+                    <AdminDashboard />
+                </AdminRoute>
+            } 
+            />
+            <Route path="/admin/products" element={
+                <AdminRoute>
+                    <AdminProducts />
+                </AdminRoute>
+            }
+            />
         </Routes>
     );
 }

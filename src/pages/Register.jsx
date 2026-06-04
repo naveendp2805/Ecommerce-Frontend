@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./LoginAndRegister.css";
 import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 function Register() {
 
@@ -20,6 +22,9 @@ function Register() {
     });
 
     const [loading, setLoading] = useState(false);
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -48,6 +53,7 @@ function Register() {
 
             localStorage.setItem("accessToken", loginResponse.accessToken);
             localStorage.setItem("refreshToken", loginResponse.refreshToken);
+            localStorage.setItem("user", JSON.stringify({userId: data.userId, email: data.email, role: data.role}));
 
             setIsAuthenticated(true);
 
@@ -112,33 +118,44 @@ function Register() {
 
                     <br />
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className="password-field">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
 
-                    <br />
+                        <button type="button" className="password-toggle" onClick={() => setShowPassword(!showPassword)} >
+                            {showPassword ? <FaEyeSlash /> : <FaEye /> }
+                        </button>
+                    </div>
 
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm Password"
-                        value={
-                            formData.confirmPassword
-                        }
-                        onChange={handleChange}
-                        required
-                    />
+                    <div className="password-field">
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            value={
+                                formData.confirmPassword
+                            }
+                            onChange={handleChange}
+                            required
+                        />
+
+                        <button type="button" className="password-toggle" onClick={() => setShowConfirmPassword(!showConfirmPassword)} >
+                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye /> }
+                        </button>
+                    </div>
 
                     <br />
 
                     <button
                         type="submit"
                         disabled={loading}
+                        className="auth-btn"
                     >
                         {
                             loading
