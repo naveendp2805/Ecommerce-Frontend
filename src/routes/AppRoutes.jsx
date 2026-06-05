@@ -15,6 +15,8 @@ import AdminRoute from "../components/auth/AdminRoute";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminCategories from "../pages/admin/AdminCategories";
 import AdminOrders from "../pages/admin/AdminOrders";
+import AdminUsers from "../pages/admin/AdminUsers";
+import AdminLayout from "../layouts/AdminLayout";
 
 function AppRoutes() {
 
@@ -63,30 +65,41 @@ function AppRoutes() {
 
             {/*Admin Routes*/}
 
-            <Route path="/admin" element={
-                <AdminRoute>
-                    <AdminDashboard />
-                </AdminRoute>
-            } 
-            />
-            <Route path="/admin/products" element={
-                <AdminRoute>
-                    <AdminProducts />
-                </AdminRoute>
-            }
-            />
-            <Route path="/admin/categories" element={
-                <AdminRoute>
-                    <AdminCategories />
-                </AdminRoute>
-            }
-            />
-            <Route path="/admin/orders" element={
-                <AdminRoute>
-                    <AdminOrders />
-                </AdminRoute>
-            }
-            />
+            <Route
+                path="/admin"
+                element={
+                    <AdminRoute>
+                        <AdminLayout />
+                    </AdminRoute>
+                }
+            >
+
+                <Route
+                    index
+                    element={<AdminDashboard />}
+                />
+
+                <Route
+                    path="products"
+                    element={<AdminProducts />}
+                />
+
+                <Route
+                    path="categories"
+                    element={<AdminCategories />}
+                />
+
+                <Route
+                    path="orders"
+                    element={<AdminOrders />}
+                />
+
+                <Route
+                    path="users"
+                    element={<AdminUsers />}
+                />
+
+            </Route>
         </Routes>
     );
 }

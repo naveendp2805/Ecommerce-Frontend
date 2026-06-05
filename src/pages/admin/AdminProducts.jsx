@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 
 function AdminProducts() {
 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+
     const [products, setProducts] = useState([]);
 
     const [categories, setCategories] = useState([]);
@@ -28,6 +31,26 @@ function AdminProducts() {
         loadProducts();
         loadCategories();
     }, []);
+
+    const filteredProducts = products.filter(product => {
+
+        const matchesName =
+            product.name
+                .toLowerCase()
+                .includes(
+                    searchTerm.toLowerCase()
+                );
+
+        const matchesCategory =
+            selectedCategory === "" ||
+            product.category?.id ===
+            Number(selectedCategory);
+
+        return (
+            matchesName &&
+            matchesCategory
+        );
+    });
 
 
     const loadCategories = async () => {
@@ -307,6 +330,42 @@ function AdminProducts() {
                 </div>
             )}
 
+            <div className="product-filters">
+                <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) =>
+                        setSearchTerm(e.target.value)
+                    }
+                />
+
+                <select
+                    value={selectedCategory}
+                    onChange={(e) =>
+                        setSelectedCategory(
+                            e.target.value
+                        )
+                    }
+                >
+
+                    <option value="">
+                        All Categories
+                    </option>
+
+                    {categories.map(category => (
+
+                        <option
+                            key={category.id}
+                            value={category.id}
+                        >
+                            {category.name}
+                        </option>
+
+                    ))}
+                </select>
+            </div>
+
             <table className="admin-table">
 
                 <thead>
@@ -322,14 +381,14 @@ function AdminProducts() {
 
                 <tbody>
 
-                    {products.length === 0 ? (
+                    {filteredProducts.length === 0 ? (
                         <tr>
-                            <td colSpan="3">
-                                No categories found
+                            <td colSpan="6">
+                                No Products found
                             </td>
                         </tr>
                     ) : (
-                        products.map(product => (
+                        filteredProducts.map(product => (
                             <tr key={product.id}>
 
                                 <td>

@@ -1,0 +1,10 @@
+.admin-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: white;
+    text-decoration: none;
+
+    padding: 10px 0;
+}

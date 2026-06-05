@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import {FaTachometerAlt, FaBoxOpen, FaTags} from "react-icons/fa";
+import {FaTachometerAlt, FaBoxOpen, FaTags, FaClipboardList, FaUsers} from "react-icons/fa";
+import "./AdminSidebar.css";
 
 function AdminSidebar() {
     return (
@@ -20,6 +21,16 @@ function AdminSidebar() {
             <Link to="/admin/categories">
                 <FaTags />
                 Categories
+            </Link>
+
+            <Link to="/admin/orders">
+                <FaClipboardList />
+                Orders
+            </Link>
+
+            <Link to="/admin/users">
+                <FaUsers />
+                Users
             </Link>
 
         </div>

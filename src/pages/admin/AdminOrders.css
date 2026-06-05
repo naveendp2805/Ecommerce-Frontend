@@ -1,10 +1,12 @@
 .admin-orders {
-    padding: 20px;
+    width: 100%;
 }
 
 .admin-orders h1 {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+
+    color: #1f2937;
 }
 
 /* =========================
@@ -13,26 +15,34 @@
 
 .admin-table {
     width: 100%;
+
     border-collapse: collapse;
 
     background: white;
+
     border-radius: 12px;
+
     overflow: hidden;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-.admin-table th,
-.admin-table td {
-    padding: 16px;
-    text-align: center;
-
-    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .admin-table th {
     background: #f8fafc;
+
+    color: #374151;
+
+    padding: 16px;
+
     font-weight: 600;
+}
+
+.admin-table td {
+    padding: 16px;
+
+    text-align: center;
+
+    border-top: 1px solid #e5e7eb;
 }
 
 .admin-table tr:hover {
@@ -47,75 +57,63 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 8px;
 }
 
 .status-badge {
-    min-width: 110px;
-
-    padding: 6px 12px;
+    padding: 6px 14px;
 
     border-radius: 999px;
 
     font-size: 12px;
     font-weight: 600;
 
-    text-align: center;
-}
-
-.status-dropdown {
-    width: 120px;
-
-    padding: 6px 8px;
-
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-
-    font-size: 12px;
-
-    background: white;
-
-    cursor: pointer;
-}
-
-.status-dropdown:focus {
-    outline: none;
-    border-color: #2563eb;
+    text-transform: uppercase;
 }
 
 /* Pending */
-
 .status-badge.pending {
     background: #fef3c7;
     color: #92400e;
 }
 
 /* Confirmed */
-
 .status-badge.confirmed {
     background: #dbeafe;
-    color: #1e40af;
+    color: #1d4ed8;
 }
 
 /* Shipped */
-
 .status-badge.shipped {
     background: #ede9fe;
     color: #6d28d9;
 }
 
 /* Delivered */
-
 .status-badge.delivered {
     background: #dcfce7;
-    color: #166534;
+    color: #15803d;
 }
 
 /* Cancelled */
-
 .status-badge.cancelled {
     background: #fee2e2;
-    color: #991b1b;
+    color: #dc2626;
+}
+
+.status-dropdown {
+    width: 140px;
+
+    padding: 6px 10px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 6px;
+
+    background: white;
+
+    cursor: pointer;
 }
 
 /* =========================
@@ -124,17 +122,20 @@
 
 .view-btn {
     background: #2563eb;
+
     color: white;
 
     border: none;
 
-    padding: 8px 14px;
+    padding: 10px 16px;
 
-    border-radius: 6px;
+    border-radius: 8px;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
+    font-weight: 600;
+
+    transition: 0.2s;
 }
 
 .view-btn:hover {
@@ -146,24 +147,25 @@
 ========================= */
 
 .pagination {
-    margin-top: 24px;
-
     display: flex;
     justify-content: center;
     align-items: center;
 
-    gap: 20px;
+    gap: 16px;
+
+    margin-top: 25px;
 }
 
 .pagination button {
-    padding: 8px 14px;
+    background: #2563eb;
+
+    color: white;
 
     border: none;
 
-    background: #2563eb;
-    color: white;
+    padding: 10px 16px;
 
-    border-radius: 6px;
+    border-radius: 8px;
 
     cursor: pointer;
 }
@@ -179,6 +181,7 @@
 
 .modal-overlay {
     position: fixed;
+
     inset: 0;
 
     background: rgba(0, 0, 0, 0.5);
@@ -191,16 +194,16 @@
 }
 
 .order-modal {
+    background: white;
+
     width: 850px;
     max-width: 95%;
-
-    background: white;
 
     border-radius: 12px;
 
     padding: 25px;
 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 .modal-header {
@@ -217,6 +220,7 @@
 
 .close-btn {
     border: none;
+
     background: transparent;
 
     font-size: 24px;
@@ -225,13 +229,7 @@
 }
 
 .order-info {
-    background: #f8fafc;
-
-    padding: 16px;
-
-    border-radius: 8px;
-
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .order-info p {
@@ -244,10 +242,20 @@
 
 .items-table {
     width: 100%;
+
     border-collapse: collapse;
+
+    margin-top: 10px;
 }
 
-.items-table th,
+.items-table th {
+    background: #f8fafc;
+
+    padding: 12px;
+
+    border: 1px solid #e5e7eb;
+}
+
 .items-table td {
     padding: 12px;
 
@@ -256,6 +264,26 @@
     text-align: center;
 }
 
-.items-table th {
-    background: #f8fafc;
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+    .admin-table {
+        font-size: 13px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 10px;
+    }
+
+    .status-dropdown {
+        width: 120px;
+    }
+
+    .order-modal {
+        padding: 15px;
+    }
 }

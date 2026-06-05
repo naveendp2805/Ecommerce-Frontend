@@ -316,3 +316,24 @@
         width: 100%;
     }
 }
+
+.product-filters {
+    display: flex;
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+.product-filters input,
+.product-filters select {
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+.product-filters input {
+    flex: 1;
+}
