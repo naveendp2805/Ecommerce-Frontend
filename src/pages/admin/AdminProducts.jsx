@@ -322,46 +322,55 @@ function AdminProducts() {
 
                 <tbody>
 
-                    {products.map(product => (
-                        <tr key={product.id}>
-
-                            <td>
-                                <img
-                                    src={product.imageUrl}
-                                    alt={product.name}
-                                    width="60"
-                                />
+                    {products.length === 0 ? (
+                        <tr>
+                            <td colSpan="3">
+                                No categories found
                             </td>
-
-                            <td>{product.name}</td>
-
-                            <td>{product.category?.name}</td>
-
-                            <td>
-                                ₹{product.price}
-                            </td>
-
-                            <td>
-                                {product.stockQuantity}
-                            </td>
-
-                            <td>
-                                <button className="edit-btn"
-                                        onClick={() => handleEditProduct(product)}
-                                >
-                                    Edit
-                                </button>
-
-                                <button
-                                    className="delete-btn"
-                                    onClick={() => handleDeleteProduct(product.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-
                         </tr>
-                    ))}
+                    ) : (
+                        products.map(product => (
+                            <tr key={product.id}>
+
+                                <td>
+                                    <img
+                                        src={product.imageUrl}
+                                        alt={product.name}
+                                        width="60"
+                                    />
+                                </td>
+
+                                <td>{product.name}</td>
+
+                                <td>{product.category?.name}</td>
+
+                                <td>
+                                    ₹{product.price}
+                                </td>
+
+                                <td>
+                                    {product.stockQuantity}
+                                </td>
+
+                                <td>
+                                    <button className="edit-btn"
+                                            onClick={() => handleEditProduct(product)}
+                                    >
+                                        Edit
+                                    </button>
+
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() => handleDeleteProduct(product.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+
+                            </tr>
+                        ))
+
+                    )}
 
                 </tbody>
 
