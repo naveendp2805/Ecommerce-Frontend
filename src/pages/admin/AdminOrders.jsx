@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyOrders } from "../../services/orderService";
+import { getMyOrders, updateOrderStatus } from "../../services/orderService";
 import { toast } from "react-toastify";
 import "./AdminOrders.css";
 
@@ -31,6 +31,25 @@ function AdminOrders() {
 
             toast.error(
                 "Failed to load orders"
+            );
+        }
+    };
+
+    const handleStatusChange = async (orderId, status) => {
+        try {
+
+            await updateOrderStatus(orderId, status);
+
+            toast.success("Order status updated");
+
+            await loadOrders();
+
+        } catch (error) {
+
+            console.error(error);
+
+            toast.error(
+                "Failed to update order status"
             );
         }
     };
@@ -77,11 +96,46 @@ function AdminOrders() {
                             </td>
 
                             <td>
-                                <span
-                                    className={`status-badge ${order.orderStatus.toLowerCase()}`}
-                                >
-                                    {order.orderStatus}
-                                </span>
+                                <div className="status-container">
+
+                                    <span
+                                        className={`status-badge ${order.orderStatus.toLowerCase()}`}
+                                    >
+                                        {order.orderStatus}
+                                    </span>
+
+                                    <select
+                                        className="status-dropdown"
+                                        value={order.orderStatus}
+                                        onChange={(e) =>
+                                            handleStatusChange(
+                                                order.orderId,
+                                                e.target.value
+                                            )
+                                        }
+                                    >
+                                        <option value="PENDING">
+                                            PENDING
+                                        </option>
+
+                                        <option value="CONFIRMED">
+                                            CONFIRMED
+                                        </option>
+
+                                        <option value="SHIPPED">
+                                            SHIPPED
+                                        </option>
+
+                                        <option value="DELIVERED">
+                                            DELIVERED
+                                        </option>
+
+                                        <option value="CANCELLED">
+                                            CANCELLED
+                                        </option>
+                                    </select>
+
+                                </div>
                             </td>
 
                             <td>
@@ -98,7 +152,7 @@ function AdminOrders() {
                                         setSelectedOrder(order)
                                     }
                                 >
-                                    View
+                                    View Details
                                 </button>
 
                             </td>
