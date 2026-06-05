@@ -133,7 +133,7 @@ function Products() {
                     </div>
                 )}
 
-                <div>
+                <div className="pagination" >
                     <button disabled={page === 0} onClick={() => setPage(page - 1)} >
                         Previous
                     </button>

@@ -57,7 +57,7 @@ function Order() {
                     ))}
                 </div>
 
-                <div>
+                <div className="pagination">
 
                     <button
                         disabled={page === 0}

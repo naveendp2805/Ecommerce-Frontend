@@ -35,3 +35,31 @@
 
     margin: 6px 0;
 }
+
+.pagination {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.pagination button {
+    padding: 8px 14px;
+
+    border: none;
+
+    background: #2563eb;
+    color: white;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

@@ -14,6 +14,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminRoute from "../components/auth/AdminRoute";
 import AdminProducts from "../pages/admin/AdminProducts";
 import AdminCategories from "../pages/admin/AdminCategories";
+import AdminOrders from "../pages/admin/AdminOrders";
 
 function AppRoutes() {
 
@@ -77,6 +78,12 @@ function AppRoutes() {
             <Route path="/admin/categories" element={
                 <AdminRoute>
                     <AdminCategories />
+                </AdminRoute>
+            }
+            />
+            <Route path="/admin/orders" element={
+                <AdminRoute>
+                    <AdminOrders />
                 </AdminRoute>
             }
             />
