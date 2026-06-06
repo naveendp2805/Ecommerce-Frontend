@@ -64,11 +64,11 @@ function ProductFilters({searchTerm, setSearchTerm, categories, selectedCategory
                 }}
             >
 
-                <option value="idAsc" >
+                <option value="idDesc" >
                     Newest First
                 </option>
 
-                <option value="idDesc" >
+                <option value="idAsc" >
                     Oldest First
                 </option>
 

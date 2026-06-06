@@ -14,3 +14,8 @@ export const updateOrderStatus = async (orderId, orderStatus) => {
     const response = await api.put(`/api/orders/${orderId}/status?orderStatus=${orderStatus}`);
     return response.data;
 };
+
+export const getAllOrders = async (page=0, size=5, sortBy="orderDate") => {
+    const response = await api.get(`/api/orders/admin?page=${page}&size=${size}&sortBy=${sortBy}`);
+    return response.data;
+}; 

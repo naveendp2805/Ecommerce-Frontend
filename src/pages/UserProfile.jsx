@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Loader from "../components/common/Loader";
 import { handleLogout } from "../utils/AuthUtils";
 import { AuthContext } from "../context/AuthContext";
+import defaultImage from "../assets/defaultImage.webp";
 
 function UserProfile() {
 
@@ -111,7 +112,7 @@ function UserProfile() {
                         <img
                             src={
                                 profile?.profileImageUrl ||
-                                "https://via.placeholder.com/180"
+                                defaultImage
                             }
                             alt="Profile"
                             className="profile-image"

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyOrders, updateOrderStatus } from "../../services/orderService";
+import { getAllOrders, updateOrderStatus } from "../../services/orderService";
 import { toast } from "react-toastify";
 import "./AdminOrders.css";
 
@@ -20,7 +20,7 @@ function AdminOrders() {
     const loadOrders = async () => {
         try {
 
-            const data = await getMyOrders(page, 10, "orderDate");
+            const data = await getAllOrders(page, 10, "orderDate");
 
             setOrders(data.content);
             setTotalPages(data.totalPages);

@@ -47,7 +47,7 @@ function Register() {
 
             setLoading(true);
 
-            await register({name: formData.name, email: formData.email, password: formData.password, phoneNumber: formData.phoneNumber});
+            const data = await register({name: formData.name, email: formData.email, password: formData.password, phoneNumber: formData.phoneNumber});
 
             const loginResponse = await login(formData.email, formData.password);
 
@@ -66,7 +66,6 @@ function Register() {
             console.error(error);
 
             toast.error(
-                error.response?.data?.message ||
                 "Registration Failed"
             );
 
